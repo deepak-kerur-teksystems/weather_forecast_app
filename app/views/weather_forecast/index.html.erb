@@ -1,0 +1,7 @@
+<h2>Weather Forecast</h2>
+
+<%= form_with url: forecast_path, method: :get, local: true do |form| %>
+  <%= form.label :address, "Enter Address (USA, Canada & UK addresses supported)" %><br/>
+  <%= form.text_field :address, maxlength: 200, size: 80 %><br/><br/>
+  <%= form.submit "Find Weather Forecast" %>
+<% end %>

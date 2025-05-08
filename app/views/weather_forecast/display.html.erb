@@ -1,0 +1,31 @@
+<h1>Forecast Results</h1>
+
+<p><strong>Entered Address:</strong> <%= @address %></p>
+<p><strong>Extracted ZIP/Postal Code:</strong> <%= @zip || "N/A" %></p>
+
+<% if @forecast.is_a?(Hash) %>
+  <p><strong>Location:</strong> <%= @forecast[:location] %>, <%= @forecast[:region] %>, <%= @forecast[:country] %></p>
+
+  <br />
+  <% if @forecast[:error] %>
+    <p style="color:red;"><%= @forecast[:error] %></p>
+  <% else %>
+    <% if @forecast[:cached] %>
+      <p style="color:teal;"><em>The following weather forecast data could be older by up to 30 minutes</em></p>
+    <% end %>
+
+    <p><strong>Current Temperature:</strong> <%= @forecast[:current_temp_c] %>°C / <%= @forecast[:current_temp_f] %>°F</p>
+    <h3>Forecast for Today & Next 2 Days</h3>
+    <ul>
+      <% @forecast[:forecast_days].each do |day| %>
+        <li>
+          <strong><%= day[:date] %></strong> - <%= day[:condition] %> -
+          High: <%= day[:max_temp_c] %>°C / <%= day[:max_temp_f] %>°F,
+          Low: <%= day[:min_temp_c] %>°C / <%= day[:min_temp_f] %>°F
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<%= link_to '← Back', root_path, style: 'display: inline-block; margin-top: 10px; padding: 6px 12px; background: #ccc; border-radius: 4px; text-decoration: none;' %>
